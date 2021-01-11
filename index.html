@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet"  href="style.css">
+    <title>音符トレーニング</title>
+</head>
+<body>
+    <h1>音符トレーニング</h1>
+    <p>音符をランダムに表示</p>
+    <div id="main">
+        <div id="form" class="div_frame">
+            <p id="pitch-range">範囲：
+                <select id="note-lower-limit"></select>
+                 ~
+                <select id="note-upper-limit"></select>
+            </p>
+            <button id="lot-button" onclick="show()">抽選</button>
+            <div id="repeat-system">
+                <input id="repeat-interval" type="text" value="1" style="width: 40px; font-size: 13px;">
+                <span style="font-size: 13px;">秒ごと</span>
+                <button id="repeat-button" onclick="repeat()">繰り返し</button>
+                <button id="stop-repeat-button" onclick="stopRepeat()" style="display: none;">停止</button>
+            </div>
+        </div>
+        <div id="note" class="div_frame"></div>
+    </div>
+    <table id="setting">
+        <tr><td>
+            <label><input type="radio" name="clef" value="treble" checked>ト音記号</label>
+            <label><input type="radio" name="clef" value="bass">ヘ音記号</label>
+            <label><input type="radio" name="clef" value="alto">ハ音記号</label>
+        </td></tr>
+        <tr><td>
+            <label><input type="radio" name="note-type" value="4" checked>4分音符</label>
+            <label><input type="radio" name="note-type" value="1">全音符</label>
+        </td></tr>
+    </table>
+
+    <script src="vexflow-debug.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

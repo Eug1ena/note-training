@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div#main {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+div#form {
+    display: inline-block;
+    padding: 10px;
+    margin-right: 10px;
+    width: 215px;
+    height: 120px;
+    text-align: center;
+}
+
+button#lot-button {
+    margin-bottom: 10px;
+}
+
+table#setting {
+    margin-top: 10px;
+    text-align: left;
+    border: solid 3px black;
+    border-collapse: collapse;
+}
+
+table#setting td {
+    margin: 0px;
+    padding: 12px 15px;
+    border: solid 3px black;
+}
+
+#note {
+    width: 200px;
+    height: 250px;
+    background-color: cyan;
+}
+
+.div_frame {
+    border: solid 3px black;
+}
