@@ -16,11 +16,11 @@
                  ~
                 <select id="note-upper-limit"></select>
             </p>
-            <button id="lot-button" onclick="show()">抽選</button>
+            <button id="lot-button" onclick="show(false)">抽選</button>
             <div id="repeat-system">
                 <input id="repeat-interval" type="text" value="1" style="width: 40px; font-size: 13px;">
                 <span style="font-size: 13px;">秒ごと</span>
-                <button id="repeat-button" onclick="repeat()">繰り返し</button>
+                <button id="repeat-button" onclick="show(true)">繰り返し</button>
                 <button id="stop-repeat-button" onclick="stopRepeat()" style="display: none;">停止</button>
             </div>
         </div>
@@ -33,8 +33,8 @@
             <label><input type="radio" name="clef" value="alto">ハ音記号</label>
         </td></tr>
         <tr><td>
-            <label><input type="radio" name="note-type" value="4" checked>4分音符</label>
-            <label><input type="radio" name="note-type" value="1">全音符</label>
+            <label><input type="radio" name="note-type" value="1" checked>全音符</label>
+            <label><input type="radio" name="note-type" value="4">4分音符</label>
         </td></tr>
     </table>
 

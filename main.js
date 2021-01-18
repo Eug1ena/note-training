@@ -125,55 +125,40 @@ function randomR(l, r) { // 区間[l, r]内
     return random(r - l + 1) + l;
 }
 
-function chooseRandomPitch(from, to, exceptAccidental = true) {
-    if(exceptAccidental){
-        if(from === to && (mod(from, 12) === 1 || mod(from, 12) === 3 || mod(from, 12) === 6 || mod(from, 12) === 8 || mod(from, 12) === 10)){
-            return;
-        }
-        let ret = randomR(from, to);
-        while(mod(ret, 12) === 1 || mod(ret, 12) === 3 || mod(ret, 12) === 6 || mod(ret, 12) === 8 || mod(ret, 12) === 10){
-            ret = randomR(from, to);
-        }
-        return ret;
-    }else{
-        return randomR(from, to);
+let previousChoice = null;
+
+function chooseRandomPitch(from, to, exceptAccidental = true, removePrevious = true) {
+    let options = [];
+    for(let i = from; i <= to; i++) {
+        options.push(i);
     }
+    if(exceptAccidental) {
+        options = options.filter(i => mod(i, 12) !== 1 && mod(i, 12) !== 3 && mod(i, 12) !== 6 && mod(i, 12) !== 8 && mod(i, 12) !== 10);
+    }
+    if(removePrevious) {
+        options = options.filter(i => i !== previousChoice);
+    }
+    if(options.length === 0) {
+        console.log("ERROR in chooseRandomPitch(): No option is available!");
+        return;
+    }
+    return previousChoice = options[random(options.length)];
 }
 
 const stopRepeatButton = document.querySelector("#stop-repeat-button");
 let intervalID = null;
 
-function show() {
+function show(isRepeat) {
     if(intervalID !== null) {
         clearInterval(intervalID);
         intervalID = null;
     }
-    stopRepeatButton.style.display = "none";
+    stopRepeatButton.style.display = (isRepeat ? "inline-block" : "none");
 
     const clef = document.querySelector("input[name='clef']:checked").value;
     const from = parseInt(document.querySelector("#note-lower-limit").value);
     const to = parseInt(document.querySelector("#note-upper-limit").value);
-    if(from > to){
-        div.innerHTML = "範囲が不適当です！";
-        return;
-    }
-    const noteType = parseInt(document.querySelector("input[name='note-type']:checked").value);
-
-    init(clef);
-    draw(clef, [getNote(chooseRandomPitch(from, to), true, false, true, true)], noteType);
-}
-
-function repeat() {
-    if(intervalID !== null) {
-        clearInterval(intervalID);
-        intervalID = null;
-    }
-    stopRepeatButton.style.display = "inline-block";
-
-    const clef = document.querySelector("input[name='clef']:checked").value;
-    const from = parseInt(document.querySelector("#note-lower-limit").value);
-    const to = parseInt(document.querySelector("#note-upper-limit").value);
-    if(from > to){
+    if(from > to) {
         div.innerHTML = "範囲が不適当です！";
         return;
     }
@@ -181,13 +166,14 @@ function repeat() {
 
     const f = () => {
         init(clef);
-        draw(clef, [getNote(chooseRandomPitch(from, to), true, false, true, true)], noteType);
+        draw(clef, [getNote(chooseRandomPitch(from, to, true, from < to), true, false, true, true)], noteType);
     };
 
-    const interval = parseFloat(document.querySelector("#repeat-interval").value) * 1000;
-
     f();
-    intervalID = setInterval(f, interval);
+    if(isRepeat) {
+        const interval = parseFloat(document.querySelector("#repeat-interval").value) * 1000;
+        intervalID = setInterval(f, interval);
+    }
 }
 
 function stopRepeat() {
